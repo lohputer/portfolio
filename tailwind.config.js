@@ -2,7 +2,7 @@
 module.exports = {
   content: [
     'index.html',
-    './levels/'
+    './levels/sec1/{html}'
   ],
   theme: {
     extend: {},
