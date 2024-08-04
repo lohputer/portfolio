@@ -1,0 +1,57 @@
+python.png
+#Python
+n = input("Give a random number")
+for i in range(1, n+1):
+    if i % 15 == 0:
+        print("Fizzbuzz")
+    elif i % 3 == 0:
+        print("Fizz")
+    elif i % 5 == 0:
+        print("Buzz")
+    else:
+        print(i)
+END
+html.png
+<!-- HTML -->
+<!DOCTYPE html>
+    <head>
+        <title>Therapy</title>
+    </head>
+    <body>
+        <p>"I feel bad, that you feel bad"</p>
+        <p>"About me feeling bad, about you feeling bad.." (iykyk)</p>
+    </body>
+</html>
+END
+css.svg
+/* CSS */
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+END
+js.png
+//Javascript
+let currentSleepHours = [5, 6, 6, 5, 5, 7, 7];
+let totalSleep = 0
+for (let i=0; i<currentSleepHours.length; i++) {
+    totalSleep += currentSleepHours[i]
+    if (currentSleepHours[i] >= 8) {
+        console.log("He got sleep?!");
+        break;
+    }
+}
+END
+typescript.png
+//Typescript
+enum Key {
+    up = 38,
+	down = 40,
+	left = 37,
+	right = 39,
+	A = 65,
+	B = 66,
+}
+var keys : Array[Key] = [Key.up, Key.up, Key.down, Key.down, Key.left, Key.left, Key.right, Key.right, Key.A, Key.B]
+//what could this be?
