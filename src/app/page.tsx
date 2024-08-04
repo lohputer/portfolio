@@ -1,19 +1,14 @@
-
+"use client";
 import React, { useState, useEffect, useCallback } from 'react'
+import { fetchLanguages } from './fetchLanguages';
 
 export default function Home() {
   const [langs, setLangs] = useState<[string, string][]>([]);
   const [endIndex, setEndIndex] = useState(0);
   var intro = "I  am Lyndon, member of EC3 [Electronics, Communications & Computing Club]. I am an aspiring web developer/writer/duck collector, none of which I am reaching but I hope to be able to get somewhat close :D "
-
+  
   useEffect(() => {
-    fetch('coding.txt').then(res => res.text()).then(data => {
-      const words = data.split('END\r\n');
-      const fetchedLangs: [string, string][] = words.map(word => {
-        const paragraph = word.split("\r\n");
-        const string = paragraph[0];
-        return [string, paragraph.slice(1).join("~")];
-      });
+    fetchLanguages().then((fetchedLangs) => {
       setLangs(fetchedLangs);
     });
   }, []);
