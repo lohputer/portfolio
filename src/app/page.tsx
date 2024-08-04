@@ -40,15 +40,15 @@ export default function Home() {
 
   function typeFunction(text: String, id: string) {
     let i = 0;
+    var taboos : {[id: string]: string} = {"~": "\n", '"': "&quot;", "'": "&apos;"}
     const interval = setInterval(() => {
-      console.log(i, text);
       if (i < text.length) {
         var div = document.getElementById(id);
         if (div) {
-          if (text.charAt(i) != "~") {
-            div.textContent += text.charAt(i);
+          if (Object.keys(taboos).includes(text.charAt(i))) {
+            div.innerHTML += taboos[text.charAt(i)]
           } else {
-            div.textContent += "\n"
+            div.innerHTML += text.charAt(i);
           }
         }
         i++;
@@ -61,7 +61,7 @@ export default function Home() {
   const handleScroll = useCallback(() => {
     const div = document.getElementById("endCoding");
     if (div) {
-      if (div.getBoundingClientRect().top < window.innerHeight - 50) {
+      if (div.getBoundingClientRect().top < window.innerHeight - 20) {
         if (endIndex < langs.length) {
           for (let j=0; j<langs[endIndex][1].split("~").length; j++) {
             typeFunction(langs[endIndex][1].split("~")[j], langs[endIndex][0] + j.toString());
