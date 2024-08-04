@@ -1,6 +1,6 @@
 
 export async function fetchLanguages() {
-    const res = await fetch("coding.txt");
+    const res = await fetch("/coding.txt");
     const data = await res.text();
     const words = data.split('END\r\n');
     const fetchedLangs: [string, string][] = words.map((word) => {
