@@ -181,6 +181,7 @@ export default function Home() {
             <p className="text-left text-sm md:text-base lg:text-xl">View Source's 3rd CTF (Capture The Flag) is a 24-hour international competition in which participants compete to find and exploit vulnerabilities in a system to capture the most "flags" before time runs outs. With my classmates, we formed the team "baked radish" and reached 6th in high school division.</p>
           </div>
         </div>
+        <h1 className="text-center text-2xl md:text-4xl text-orange-500 font-semibold">Writing :D</h1>
       </div>
     </main>
   );
