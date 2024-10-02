@@ -5,14 +5,60 @@ import { fetchLanguages } from './fetchLanguages';
 export default function Home() {
   const [langs, setLangs] = useState<[string, string][]>([]);
   const [endIndex, setEndIndex] = useState(0);
+  const [writings, setWritings] = useState<{[id: string]: {[id: string]: string | [] | [[string, string]] }}>({});
+  const API_KEY = "AIzaSyCp67khSNx3_0LXlvWjf6KZasYpdYDPbDU";
+  const FOLDER_ID = "1PftxTQEdnWlGwDe3mek6SLHsjjqG8UQ2";
+  const url = `https://www.googleapis.com/drive/v3/files?q='${FOLDER_ID}'+in+parents&key=${API_KEY}&fields=files(id,name,mimeType)`;
   var intro = "I  am Lyndon, member of EC3 [Electronics, Communications & Computing Club]. I am an aspiring web developer/writer/duck collector, none of which I am reaching but I hope to be able to get somewhat close :D "
   
   useEffect(() => {
     fetchLanguages().then((fetchedLangs) => {
       setLangs(fetchedLangs);
     });
+    updateData();
+    console.log(writings);
   }, []);
   
+  const updateData = () => {
+    fetch(url).then(response => response.json()).then(data => {
+      data.files.forEach((file: any) => {
+        var writing: {[id: string]: string | [] | [[string, string]] } = {}
+        fetch(`https://www.googleapis.com/drive/v3/files/${file.id}/export?mimeType=text/html&key=${API_KEY}`).then(response => response.text()).then(content => {
+          let bodyContent = content.match(/<body(.*?)>(.*?)<\/body>/g);
+          if (bodyContent) {
+            if (bodyContent[0]) {
+              let bodyText = bodyContent[0];
+              let sections = bodyText.split(/<h2[^>]*><span[^>]*>(.*?)<\/span><\/h2>/g);
+              for (let i=1; i<sections.length; i+=2) {
+                if (sections[i] == "Synopsis") {
+                  writing["Synopsis"] = sections[i+1];
+                } else if (sections[i] == "Content") {
+                  let chaps = sections[i+1].split(/<h3[^>]*><span[^>]*>(.*?)<\/span><\/h3>/g);
+                  if (chaps.length == 1) {
+                    writing["Content"] = chaps[0];
+                  } else {
+                    if (!Array.isArray(writing["Content"])) {
+                      writing["Content"] = [];
+                    }
+                    for (let j = 1; j < chaps.length; j += 2) {
+                      (writing["Content"] as [[string, string]]).push([chaps[j], chaps[j + 1]]);
+                    }
+                  }
+                }
+              }
+              console.log(writing);
+              setWritings(prevWritings => ({
+                ...prevWritings,
+                [file.name]: writing
+              }));
+            }
+          }
+        }).catch(error => {
+          console.error('Error fetching file content:', error);
+        });
+      });
+    }).catch(error => console.error('Error:', error));
+  }
   const typeAnimation = (text: String, id: string) => useEffect(() => {
     let i = 0;
     const interval = setInterval(() => {
@@ -182,6 +228,27 @@ export default function Home() {
           </div>
         </div>
         <h1 className="text-center text-2xl md:text-4xl text-orange-500 font-semibold">Writing :D</h1>
+        <div className="py-4 px-8 lg:py-8 m-5 flex flex-col gap-10 items-center justify-center">
+          {Object.entries(writings).map(([fileName, writing]) => (
+            <div key={fileName} className="flex flex-col items-left justify-center bg-orange-500 rounded-3xl p-4 w-full max-w-xl">
+              <h2 className="text-xl font-semibold">{fileName}</h2>
+              <div className="mt-2">
+                {typeof writing.Synopsis === 'string' && <p><strong>Synopsis:</strong> {writing.Synopsis}</p>}
+                {typeof writing.Content === 'string' && <p><strong>Content:</strong> {writing.Content}</p>}
+                {Array.isArray(writing.Content) && (
+                  <div>
+                    {writing.Content.map(([title, content], index) => (
+                      <div key={index} className="mt-2">
+                        <h3 className="font-semibold">{title}</h3>
+                        <p>{content}</p>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </main>
   );
