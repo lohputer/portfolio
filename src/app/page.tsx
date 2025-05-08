@@ -1,8 +1,11 @@
 "use client";
 import React, { useEffect } from 'react'
 export default function Home() {
-  
-  var intro = "I am Lyndon, member of EC3 [Electronics, Communications & Computing Club] -- a section of the Infocomm & Robotics Society CCA in Hwa Chong. I am an aspiring writer and pick up web development every now and then :D "
+  let birthdate = new Date("05/29/2009");
+  let currdate = Date.now();
+  let years = Math.floor((Math.round((currdate-birthdate.getTime()) / (1000*3600*24))) / 365)
+
+  var intro = "I am Lyndon, member of EC3 [Electronics, Communications & Computing Club] -- a section of the Infocomm & Robotics Society CCA in Hwa Chong. I am currently " + years + " years old and am an aspiring writer with a side passion for programming, mostly web development :D "
   
   const typeAnimation = (text: String, id: string) => useEffect(() => {
     let i = 0;
@@ -32,9 +35,8 @@ export default function Home() {
           <a className="z-20 text-xl lg:text-2xl text-yellow-400 font-bold" href="#aboutme">lohputer</a>
           <a className="z-20 text-base lg:text-lg text-yellow-100 font-semibold" href="#coding">coding</a>
           <a className="z-20 text-base lg:text-lg text-yellow-100 font-semibold" href="#writing">writing</a>
-          <a className="z-20 text-base lg:text-lg text-yellow-100 font-semibold" href="#misc">misc</a>
         </div>
-        <div className="flex flex-row float-right gap-5">
+        <div className="flex flex-row float-right gap-5 justify-center items-center">
           <a className="z-20 text-base lg:text-lg text-yellow-100 font-semibold" href="https://github.com/lohputer">GitHub</a>
         </div>
       </nav>
@@ -49,11 +51,11 @@ export default function Home() {
           </div>
           <img id="coding" src="bread.jpeg" className="rounded-3xl"></img>
         </div>
-        <h1 className="text-center text-2xl md:text-4xl text-orange-500 font-semibold">My Programming Languages</h1>
+        <h1 className="text-center text-2xl md:text-4xl text-orange-500 font-semibold">Frontend</h1>
         <div className="py-4 px-8 lg:py-8 m-5 flex flex-col gap-10 items-center justify-center">
-          
+          {/* python, javascript, css,  */}
         </div>
-        <h1 className="text-center text-2xl md:text-4xl text-orange-500 font-semibold">My Frameworks</h1>
+        <h1 className="text-center text-2xl md:text-4xl text-orange-500 font-semibold">Backend</h1>
         <div className="py-4 px-8 lg:py-8 m-5 items-center justify-center flex flex-wrap gap-10">
           <div className="text-blue-500 items-center justify-center flex flex-col w-32">
             <img src="react.png" className="aspect-square" />
@@ -90,11 +92,17 @@ export default function Home() {
               <p className="text-center text-sm md:text-base lg:text-xl">Backend 1</p>
             </div>
           </div>
+          <div className="text-blue-500 items-center justify-center flex flex-col w-32">
+            <img src="django.png" className="aspect-square" />
+            <div className="max-w-max">
+              <h2 className="text-center text-lg md:text-xl lg:text-2xl font-semibold">SQL</h2>
+              <p className="text-center text-sm md:text-base lg:text-xl">Backend 2</p>
+            </div>
+          </div>
         </div>
         <h1 className="text-center text-2xl md:text-4xl text-orange-500 font-semibold">My Tools</h1>
         <ul className="m-5 list-disc">
           <li className="text-base md:text-xl text-orange-500">GitHub</li>
-          <li className="text-base md:text-xl text-orange-500">Git</li>
           <li className="text-base md:text-xl text-orange-500">Netlify</li>
           <li className="text-base md:text-xl text-orange-500">Vercel</li>
         </ul>
